@@ -1,0 +1,10 @@
+comparison_type,meaning
+general_vs_sc,General-category name compared with Dalit/SC name
+general_vs_obc,General-category name compared with OBC name
+general_internal,One privileged/general name compared with another lower-ranked or ambiguous general-category cue
+obc_internal,Dominant OBC name compared with lower-ranked OBC name
+sc_internal,One Dalit/SC name compared with another Dalit/SC name
+obc_vs_sc,OBC name compared with Dalit/SC name
+st_vs_obc,ST/Adivasi name compared with OBC name
+st_vs_sc,ST/Adivasi name compared with Dalit/SC name
+ambiguous_vs_marked,Ambiguous surname compared with strongly caste-marked surname
