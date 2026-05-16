@@ -1,4 +1,4 @@
-# EquiCaste
+# Graded Inquality
 
 Caste is a graded hierarchy operating predominantly in the Global South, where each group holds relative privilege over those ranked below it. As predictive and generative models move from chat interfaces into the infrastructure of hiring, education, banking, and welfare, the concern is not occasional biased outputs but the reproduction of graded inequality at computational scale.
 
