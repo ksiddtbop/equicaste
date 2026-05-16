@@ -58,3 +58,26 @@ The General > OBC > SC ordering confirms the graded inequality hypothesis.
 ---
 
 ## Repository
+equicaste/
+├── data/
+│ ├── names.csv
+│ ├── scenarios.csv
+│ ├── comparison_names.csv
+│ └── prompts_50.csv
+├── results/
+│ └── results_groq_llama3.csv
+└── scripts/
+└── groq_runner.py
+
+---
+## Run the Experiment
+Get a free API key at console.groq.com, then:
+pip install groq
+python scripts/groq_runner.py
+---
+## Keywords
+caste bias · graded inequality · endogamy · algorithmic auditing · fairness in NLP · agentic AI · matched-pair audit · Dalit · Ambedkar · AI governance
+---
+## Author
+Kunwar Siddharth  
+PhD Researcher, UPES Dehradun 
