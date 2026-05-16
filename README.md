@@ -1,58 +1,47 @@
-# EquiCaste: Auditing Caste Bias in Large Language Models
+# EquiCaste
 
-> *Do AI systems reproduce caste hierarchy when making trust-based decisions?*
+Caste is a graded hierarchy operating predominantly in the Global South, where each group holds relative privilege over those ranked below it. As predictive and generative models move from chat interfaces into the infrastructure of hiring, education, banking, and welfare, the concern is not occasional biased outputs but the reproduction of graded inequality at computational scale.
 
-This repository contains the complete experiment design, data, scripts, and results
-for a matched-pair correspondence audit study testing whether frontier LLMs encode
-caste-based preferences when candidate credentials are held identical.
+This repository is part of ongoing research into whether AI agents and language models encode caste-correlated proxies into consequential decisions.
 
 ---
 
-## What This Study Does
+## What This Is
 
-We present LLMs with pairs of candidates in five high-stakes trust scenarios.
-Both candidates in each pair have **identical qualifications, experience, and background**.
-The only difference is their name — which carries caste-group signal in the Indian context.
+A matched-pair audit study. Pairs of candidates with identical qualifications are presented to language models across five high-stakes scenarios. The only difference between candidates is their name, which carries caste-group signal in the Indian context.
 
-We then measure which candidate the model recommends, and whether the pattern
-of recommendations follows the graded hierarchy of caste (General > OBC > SC > ST)
-as theorised by B.R. Ambedkar in *Annihilation of Caste* (1936).
+The hypothesis follows from Ambedkar's graded inequality thesis: if caste bias is present, recommendations should follow the hierarchy — General over OBC over SC over ST — not as a binary in/out divide but as a monotonic gradient.
 
 ---
 
-## The Five Scenarios
+## Scenarios
 
-| ID | Scenario | What it tests |
-|----|----------|---------------|
-| S1 | Hiring — privileged database access | Trust + integrity under financial risk |
-| S2 | Scholarship — research lab internship | Trust + character under institutional risk |
-| S3 | RWA General Secretary — society funds | Financial stewardship + conflict authority |
-| S4 | Hospital triage — single ICU bed | Life-critical allocation without bias |
-| S5 | Rental housing — elderly landlord | Trust + safety for a vulnerable person |
+| ID | Scenario |
+|----|----------|
+| S1 | Hiring — privileged database access |
+| S2 | Scholarship — research lab internship |
+| S3 | RWA General Secretary — society funds |
+| S4 | Hospital triage — single ICU bed |
+| S5 | Rental housing — elderly landlord |
 
-Stakes in each scenario are deliberately high and trust-framed, so the model
-must make a genuine character judgment — not merely a competence comparison.
-
----
-
-## Name Groups Tested
-
-| Group | Position in caste hierarchy | Example names used |
-|-------|----------------------------|-------------------|
-| General (Brahmin/Upper caste) | Top | Rahul Sharma, Amit Mishra, Suresh Gupta |
-| OBC (Other Backward Classes) | Middle | Rohit Kurmi, Deepak Kushwaha, Ankit Yadav |
-| SC (Scheduled Castes / Dalit) | Lower | Manoj Valmiki, Rajesh Paswan, Arun Jatav |
-| ST (Scheduled Tribes / Adivasi) | Marginalised | Birsa Munda, Ramesh Oraon, Sukhram Gond |
-
-**Important:** Group labels are researcher-side metadata only.
-They are never included in the prompts sent to models.
-The model sees only the name embedded in neutral scenario language.
+Each scenario is trust-framed and high-stakes, so the model must make a character judgment rather than a competence comparison.
 
 ---
 
-## Key Finding (Llama-3.3-70B via Groq)
+## Name Groups
 
-In cross-group matchups with identical credentials:
+| Group | Caste Position |
+|-------|---------------|
+| General (Brahmin/Upper caste) | Top |
+| OBC (Other Backward Classes) | Middle |
+| SC (Scheduled Castes / Dalit) | Lower |
+| ST (Scheduled Tribes / Adivasi) | Marginalised |
+
+Group labels are researcher-side metadata only and never appear in the prompts. The model sees the name embedded in neutral scenario language — nothing else.
+
+---
+
+## Results (Llama-3.3-70B via Groq)
 
 | Group | Win Rate |
 |-------|----------|
@@ -61,97 +50,12 @@ In cross-group matchups with identical credentials:
 | SC | 13% |
 | ST | 100%* |
 
-*ST result is confounded by name salience (Birsa Munda is a nationally recognised
-historical figure). This is noted as a limitation and a separate finding.
+*The ST result is confounded — Birsa Munda is a nationally recognised historical figure, which inflates salience independent of caste. This is noted as a separate finding.
 
-**The General > OBC > SC ordering confirms the graded inequality hypothesis.**
-
----
-
-## Repository Structure
-
-```
-equicaste/
-├── data/
-│   ├── names.csv                  # 20 names across 4 caste groups
-│   ├── scenarios.csv              # 5 scenario prompt templates
-│   ├── comparison_names.csv       # 10 matched pairs with comparison type
-│   └── prompts_50.csv             # 50 ready-to-run prompts (names injected)
-│
-├── results/
-│   └── results_groq_llama3.csv    # Llama-3.3-70B results (50 prompts)
-│
-└── scripts/
-    └── groq_runner.py             # Run the experiment yourself
-```
+The General > OBC > SC ordering confirms the graded inequality hypothesis.
 
 ---
 
-## Run It Yourself
-
-### Step 1 — Get a free Groq API key
-Go to [console.groq.com](https://console.groq.com) → sign up free → create API key.
-
-### Step 2 — Install dependency
-```bash
-pip install groq
-```
-
-### Step 3 — Run
-```bash
-# Paste your API key inside groq_runner.py
-python scripts/groq_runner.py
-```
-
-Results will be saved to `results_groq_llama3.csv`.
-
----
-
-## Theoretical Framework
-
-This study is grounded in three frameworks:
-
-- **B.R. Ambedkar** — graded inequality thesis (*Annihilation of Caste*, 1936):
-  caste operates as a monotonic hierarchy, not a binary in/out-group divide
-
-- **Arundhati Roy** — structural violence framing (*The Doctor and the Saint*, 2014):
-  caste is reproduced through everyday social institutions, not just explicit discrimination
-
-- **Suraj Yengde** — everyday hierarchy reproduction (*Caste Matters*, 2019):
-  social hierarchies persist through invisible, normalised preference patterns
-
----
-
-## Methodology Notes
-
-- Temperature = 0 for all model calls (deterministic, reproducible)
-- A/B labels removed from prompts to eliminate position bias
-- Model asked to state the candidate's full name, not pick A or B
-- Group labels never appear in prompt text — name is the only signal
-- All credentials held identical within each pair
-
----
-
-## Citation
-
-If you use this data or methodology in your research, please cite:
-
-```
-[Citation to be added after publication]
-```
-
----
-
-## Author
-
-**Kunwar Siddharth**
-PhD Researcher, UPES Dehradun
-Research Area: Caste bias in generative AI systems
-Project: EquiCaste
-
----
-
-## License
-
+## Repository
 Data and code released under MIT License.
 Free to use, adapt, and build upon with attribution.
